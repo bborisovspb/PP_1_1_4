@@ -1,9 +1,12 @@
-package jm.task.core.jdbc.dao;
 
+
+package jm.task.core.jdbc.dao;
 import jm.task.core.jdbc.model.User;
 import jm.task.core.jdbc.util.Util;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+
 import java.util.List;
 
 public class UserDaoHibernateImpl implements UserDao {
@@ -42,15 +45,11 @@ public class UserDaoHibernateImpl implements UserDao {
 
     @Override
     public void removeUserById(long id) {
-        Session session = null;
-        try {session = sessionFactory.getCurrentSession();
+        try (Session session = sessionFactory.getCurrentSession()) {
             session.beginTransaction();
-            session.delete(session.get(User.class, id));
+            User user = session.get(User.class, id);
+            session.delete(user);
             session.getTransaction().commit();
-        } catch (Exception e) {
-            session.getTransaction().rollback();
-        } finally {
-            session.close();
         }
     }
 
@@ -76,17 +75,13 @@ public class UserDaoHibernateImpl implements UserDao {
 
     @Override
     public void saveUser(String name, String lastName, byte age) {
-        Session session = null;
-        try {
-            session = sessionFactory.getCurrentSession();
+
+        try (Session session = sessionFactory.getCurrentSession()) {
             session.beginTransaction();
             session.save(new User(name, lastName, age));
             session.getTransaction().commit();
-        }  catch (RuntimeException e) {
-            session.getTransaction().rollback();
+        } catch (RuntimeException e) {
             e.printStackTrace();
-        } finally {
-            session.close();
         }
     }
 }
