@@ -21,7 +21,7 @@ public class UserDaoHibernateImpl implements UserDao {
             session.createSQLQuery("CREATE TABLE IF NOT EXISTS Users (" +
                     "    id INT NOT NULL AUTO_INCREMENT," +
                     "    name VARCHAR(75)," +
-                    "    last_Name VARCHAR(75)," +
+                    "    lastName VARCHAR(75)," +
                     "    age INT," +
                     "    PRIMARY KEY (id)" +
                     ")").executeUpdate();

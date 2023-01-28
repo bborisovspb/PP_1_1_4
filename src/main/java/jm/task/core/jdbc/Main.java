@@ -12,9 +12,10 @@ import java.util.List;
 public class Main {
     public static void main(String[] args) {
 
-        UserService userService = new UserServiceImpl();
-        userService.createUsersTable();
 
+        UserService userService = new UserServiceImpl();
+        userService.dropUsersTable();
+        userService.createUsersTable();
         userService.saveUser("Mark", "Greenwood", (byte)14);
 
         userService.createUsersTable();
@@ -32,8 +33,8 @@ public class Main {
 
         userService.cleanUsersTable();
 
-        userService.dropUsersTable();
-        userService.dropUsersTable();
+//        userService.dropUsersTable();
+//
 
     }
 }
