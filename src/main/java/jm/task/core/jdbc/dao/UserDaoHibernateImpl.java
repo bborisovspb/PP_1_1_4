@@ -16,16 +16,15 @@ public class UserDaoHibernateImpl implements UserDao {
 
     @Override
     public void createUsersTable() {
-        String sql = "CREATE TABLE IF NOT EXISTS Users (" +
-                "    id INT NOT NULL AUTO_INCREMENT," +
-                "    name VARCHAR(75)," +
-                "    last_Name VARCHAR(75)," +
-                "    age INT," +
-                "    PRIMARY KEY (id)" +
-                ")";
         try (Session session = sessionFactory.getCurrentSession()) {
             session.beginTransaction();
-            session.createSQLQuery(sql).executeUpdate();
+            session.createSQLQuery("CREATE TABLE IF NOT EXISTS Users (" +
+                    "    id INT NOT NULL AUTO_INCREMENT," +
+                    "    name VARCHAR(75)," +
+                    "    last_Name VARCHAR(75)," +
+                    "    age INT," +
+                    "    PRIMARY KEY (id)" +
+                    ")").executeUpdate();
             session.getTransaction().commit();
         } catch (RuntimeException e) {
             e.printStackTrace();
@@ -34,10 +33,9 @@ public class UserDaoHibernateImpl implements UserDao {
 
     @Override
     public void dropUsersTable() {
-        String sql = "drop table if exists users";
         try (Session session = sessionFactory.getCurrentSession()) {
             session.beginTransaction();
-            session.createSQLQuery(sql).executeUpdate();
+            session.createSQLQuery("drop table if exists users").executeUpdate();
             session.getTransaction().commit();
         }
     }

@@ -14,7 +14,6 @@ public class Main {
 
         UserService userService = new UserServiceImpl();
         userService.createUsersTable();
-        userService.dropUsersTable();
 
         userService.saveUser("Mark", "Greenwood", (byte)14);
 
@@ -33,6 +32,7 @@ public class Main {
 
         userService.cleanUsersTable();
 
+        userService.dropUsersTable();
         userService.dropUsersTable();
 
     }
